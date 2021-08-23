@@ -85,7 +85,7 @@ public class UserMapperTest {
         mapper = sqlSession.getMapper(UserMapper.class);
 
         User user =  new User();
-        user.setUsername("李四");
+        user.setUsername("赵六");
         user.setPassword("123123");
         mapper.insertUser(user);
 
@@ -100,7 +100,7 @@ public class UserMapperTest {
 
         User user =  new User();
         user.setId(52);
-        user.setUsername("张三");
+        user.setUsername("张三+李四");
         mapper.updateUser(user);
         sqlSession.commit();
         sqlSession.close();

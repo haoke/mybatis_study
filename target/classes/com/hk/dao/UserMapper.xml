@@ -5,9 +5,10 @@
 <mapper namespace="com.hk.dao.UserMapper">
 
     <!-- Select use bind , in , concat -->
-    <select id="findUserByNameAndIdInBindPassword" parameterType="user" resultType="user">
+    <select id="findUserByNameAndIdInBindPassword" parameterType="com.hk.pojo.User" resultType="com.hk.pojo.User">
         select * from user
         <where>
+
             <include refid="query_user_where_id_in"/>
         </where>
     </select>
@@ -27,7 +28,7 @@
     </sql>
 
     <!-- Insert -->
-    <insert id="insertUser" parameterType="user">
+    <insert id="insertUser" parameterType="com.hk.pojo.User">
         <selectKey keyProperty="id" order="AFTER" resultType="int">
             select last_insert_id()
         </selectKey>
@@ -35,7 +36,7 @@
     </insert>
 
     <!-- Update -->
-    <update id="updateUser" parameterType="user">
+    <update id="updateUser" parameterType="com.hk.pojo.User">
         update user
         <trim>
             <set>
@@ -56,7 +57,7 @@
     </delete>
 
     <!-- 使用实体类的包装对象作为查询条件-->
-    <select id="findUserByNameFromUserQueryVo" parameterType="userQueryVo" resultType="user">
+    <select id="findUserByNameFromUserQueryVo" parameterType="com.hk.pojo.User" resultType="java.util.List">
         select  * from user where username like #{user.username}
     </select>
 </mapper>
