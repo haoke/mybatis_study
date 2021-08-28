@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.hk.dao.OrderUserListMapper">
+
+    <select id="findOrderUserDetailListMapper"  resultMap="OrderUserDetailListResultMap">
+        SELECT o.id, o.user_id, o.number,o.createtime, u.id  uid,u.username, u.birthday, od.id od_id,od.items_id
+        FROM Orders o,USER u, orderdetail od
+        WHERE o.user_id = u.id
+          AND od.`orders_id` = o.`id`
+    </select>
+    <resultMap id="OrderUserDetailListResultMap" type="order">
+        <id property="id" column="id"/>
+        <result property="userid" column="user_id"/>
+        <result property="number" column="number"/>
+        <result property="createtime" column="createtime"/>
+        <association property="user" javaType="user">
+            <id property="id" column="uid"/>
+            <result property="username" column="username"/>
+            <result property="birthday" column="birthday"/>
+        </association>
+        <collection property="orderDetail" ofType="orderDetail">
+            <id property="id" column="od_id"/>
+            <result property="itemsId" column="items_id"/>
+        </collection>
+     </resultMap>
+
+    <select id="findUserOrderDetailItemListMapper" resultMap="UserOrderDetailItemListResultMap" >
+        SELECT o.id,o.user_id o_user_id, o.number o_number,o.createtime o_createtime ,u.id uid,u.username u_name,u.birthday u_birthday,
+               od.id od_id,od.`items_num` od_num, od.items_id , od.items_num*it.price sumprice, it.name, it.price,
+               it.`detail`,it.`createtime`
+        FROM Orders o, USER u ,orderdetail od, items it
+        WHERE o.user_id = u.id
+    </select>
+    <resultMap id="UserOrderDetailItemListResultMap" type="user">
+        <id property="id" column="uid"/>
+        <result property="username" column="u_name"/>
+        <result property="birthday" column="birthday"/>
+        <collection property="order" javaType="order">
+            <id property="id" column="id"/>
+            <result property="userid" column="o_user_id"/>
+            <result property="number" column="o_number"/>
+            <result property="createtime" column="createtime"/>
+            <collection property="orderdetail" javaType="orderdetail">
+
+            </collection>
+        </collection>
+
+    </resultMap>
+</mapper>
