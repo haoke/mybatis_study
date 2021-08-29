@@ -28,5 +28,13 @@ public class OrderUserListMapperTest {
         userList.stream().forEach(System.out::println);
     }
 
+    @Test
+    public void testFindUserOrderDetailItemListMapper(){
+        sqlSession = sqlSessionFactory.openSession();
+        OrderUserListMapper mapper = sqlSession.getMapper(OrderUserListMapper.class);
+        List userList = mapper.findUserOrderDetailItemListMapper();
+        userList.stream().forEach(System.out::println);
+    }
+
 
 }

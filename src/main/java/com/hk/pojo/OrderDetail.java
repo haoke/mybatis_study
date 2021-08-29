@@ -8,5 +8,5 @@ public class OrderDetail {
     private Integer ordersId;
     private Integer itemsId;
     private Integer itemsNum;
-    private Items item;
+    private Items items;
 }
