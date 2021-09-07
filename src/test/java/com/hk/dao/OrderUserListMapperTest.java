@@ -36,5 +36,13 @@ public class OrderUserListMapperTest {
         userList.stream().forEach(System.out::println);
     }
 
+    @Test
+    public void testFindOrderUserListLazyLoading(){
+        sqlSession = sqlSessionFactory.openSession();
+        OrderUserListMapper mapper = sqlSession.getMapper(OrderUserListMapper.class);
+        List orderList = mapper.findOrderUserListLazyLoading();
+        orderList.stream().forEach(System.out::println);
+
+    }
 
 }

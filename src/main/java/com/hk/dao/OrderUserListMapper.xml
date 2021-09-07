@@ -58,4 +58,14 @@
         </collection>
 
     </resultMap>
+    
+    <select id="findOrderUserListLazyLoading" resultMap="OrderUserListLazyLoadingResultMap">
+        select * from orders
+    </select>
+    <resultMap id="OrderUserListLazyLoadingResultMap" type="order">
+        <id property="id" column="id"/>
+        <result property="number" column="number"/>
+        <result property="createtime" column="createtime"/>
+        <association property="user" select="com.hk.mapper.UsersMapper.findUserById" column="user_id"/>
+    </resultMap>
 </mapper>

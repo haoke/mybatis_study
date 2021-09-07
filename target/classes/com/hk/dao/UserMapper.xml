@@ -11,7 +11,6 @@
             <include refid="query_user_where_id_in"/>
         </where>
     </select>
-
     <sql id="query_user_where_id_in">
         <bind name="password" value="'%' + password + '%'"/>
         <if test="username != null and username != ''">
@@ -26,6 +25,9 @@
         </foreach>
     </sql>
 
+    <select id="findUserById" parameterType="com.hk.pojo.User" >
+        select * from user where  id = #{id}
+    </select>
     <!-- Insert -->
     <insert id="insertUser" parameterType="com.hk.pojo.User">
         <selectKey keyProperty="id" order="AFTER" resultType="int">
