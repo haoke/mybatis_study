@@ -14,8 +14,8 @@
     <typeAliases>
         <package name="com.hk.pojo"/>
     </typeAliases>
-    <environments default="test">
-        <environment id="test">
+    <environments default="mysql">
+        <environment id="mysql">
             <transactionManager type="JDBC"/>
             <dataSource type="POOLED">
                 <property name="driver" value="${jdbc.driver}"/>

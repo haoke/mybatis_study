@@ -5,7 +5,7 @@
 <mapper namespace="com.hk.dao.UserMapper">
 
     <!-- Select use bind , in , concat -->
-    <select id="findUserByNameAndIdInBindPassword" parameterType="com.hk.pojo.User" resultType="com.hk.pojo.User">
+    <select id="findUserByNameAndIdInBindPassword"  resultType="com.hk.pojo.User">
         select * from user
         <where>
             <include refid="query_user_where_id_in"/>
@@ -19,48 +19,78 @@
         <if test="sex != null  and sex != ''">
             or sex like '%${sex}%'                                                <!-- TODO -->
         </if>
-        or password like #{password}
-        <foreach collection="ids" open="and id in (" close=")" item="id" separator=",">
-            #{id}
-        </foreach>
+        <if test="password !=null and password !='' ">
+            or password like #{password}
+        </if>
+        <if test="ids != null and ids != ''">
+            <foreach collection="ids" open="or id in (" close=")" item="id" separator=",">
+                #{id}
+            </foreach>
+        </if>
     </sql>
 
-    <select id="findUserById" parameterType="com.hk.pojo.User" >
-        select * from user where  id = #{id}
+    <select id="findUserById" parameterType="int" resultType="com.hk.pojo.User" >
+        <!--select * from user where  id = #{id}-->
+        select * from user where  id = ${id}
     </select>
+
     <!-- Insert -->
-    <insert id="insertUser" parameterType="com.hk.pojo.User">
+    <insert id="insertUser" parameterType="com.hk.pojo.User" useGeneratedKeys="true" keyProperty="id">
         <selectKey keyProperty="id" order="AFTER" resultType="int">
-            select last_insert_id()
+            select @@identity
+            <!--select last_insert_id()-->
         </selectKey>
         insert into user(username, password) values (#{username},#{password})
     </insert>
 
-    <!-- Update -->
-    <update id="updateUser" parameterType="com.hk.pojo.User">
-        update user
-        <trim>
-            <set>
-                <if test="username != null">
-                    username = #{username},
-                </if>
-                <if test="password != null">
-                    password = #{password},
-                </if>
-            </set>
-        </trim>
-        where id = #{id}
-    </update>
-
-    <!-- Delete -->
-    <delete id="deleteUser" parameterType="int">
-        delete         from user        where id = #{id}
-    </delete>
 
     <!-- 使用实体类的包装对象作为查询条件-->
-    <select id="findUserByNameFromUserQueryVo" parameterType="com.hk.pojo.User" resultType="java.util.List">
-        select  * from user where username like #{user.username}
+    <!--<select id="findUserByNameFromUserQueryVo" parameterType="com.hk.pojo.User" resultType="com.hk.pojo.User">-->
+    <!--    select  * from user where username like #{user.username}-->
+    <!--</select>-->
+
+    <!-- 1. 1个参数
+			  #{}: 任何表示形式
+			  ${}: 可以是${参数名} ， ${value} ， ${_parameter}
+		  -->
+    <!--List findUserByName(String username);-->
+    <select id="findUserByName" resultType="com.hk.pojo.User">
+        select  * from user where username = '${username}'
     </select>
 
+    <!-- 2. 多个参数
+        #{}：传入参数值两种形式  ㈠ arg0，arg1....  argn    ㈡param1,param2....paramn
+        ${}: 一种参数传入方式  ㈠ param1, param2
+    -->
+    <!--User findUserByUnameAndPassword(String username, String Password);-->
+    <select id="findUserByUnameAndPassword" resultType="com.hk.pojo.User">
+        <!--select * from user where username = #{arg0} and password=#{arg1}-->
+        select * from user where username = #{param1} and password= #{param2}
+    </select>
 
+    <!--3. 参数是JavaBean-->
+    <!-- List findUserByBeanName(User user);-->
+    <select id="findUserByBeanName" resultType="com.hk.pojo.User">
+        <!--  #{username}-->
+        select * from user u where u.username = '${username}'
+    </select>
+
+    <!--4. 参数放入map中-->
+    <select id="findUserByIdAndNameMap" resultType="com.hk.pojo.User">
+        select * from user where id = ${idmap} and username= '${usernameMap}'
+    </select>
+
+    <!--5. 参数以param传入 -->
+    <select id="findUserByIdAndNameParam" resultType="map">
+        select * from user where id = #{id} and username =#{username}
+    </select>
+
+    <!-- 查询单行数据 以Map返回 -->
+    <select id="findUserByIdMap"  resultType="map">
+        select  * from user where id = #{id}
+    </select>
+    <!-- 查询多行数据 以Map返回 -->
+    <select id="findAllUser" resultType="java.util.HashMap">
+        select * from user;
+    </select>
 </mapper>
