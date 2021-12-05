@@ -26,7 +26,9 @@ public interface UserMapper {
      * sql: insert user
      * @param user pojo参数
      */
-     void insertUser(User user);
+    void insertUser(User user);
+
+   void  updateUser(User user);
 
     User findUserById(Integer  id);
 
