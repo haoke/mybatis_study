@@ -17,7 +17,8 @@ public class User implements Serializable {
     private List ids;
     private List order;
 
-    public User(){}
+    public User() {
+    }
 
     public User(String username) {
         this.username = username;

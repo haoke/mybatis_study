@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hk.dao.UserMapper">
 
-    <!-- Select use bind , in , concat -->
+    <!-- Select use bind/concat/in -->
     <select id="findUserByNameAndIdInBindPassword"  resultType="com.hk.pojo.User">
         select * from user
         <where>
@@ -43,6 +43,20 @@
         insert into user(username, password) values (#{username},#{password})
     </insert>
 
+    <update id="updateUser" parameterType="user">
+        update user
+        <trim>
+            <set>
+                <if test="username != null">
+                    username = #{username},
+                </if>
+                <if test="password != null">
+                    password = #{password},
+                </if>
+            </set>
+        </trim>
+        where id = #{id}
+    </update>
 
     <!-- 使用实体类的包装对象作为查询条件-->
     <!--<select id="findUserByNameFromUserQueryVo" parameterType="com.hk.pojo.User" resultType="com.hk.pojo.User">-->
