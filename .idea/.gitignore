@@ -1,0 +1,6 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Datasource local storage ignored files
+/../../../../../../:\MyDoc\IdeaProjects\SpringMVCTest\mybatis_git\.idea/dataSources/
+/dataSources.local.xml
