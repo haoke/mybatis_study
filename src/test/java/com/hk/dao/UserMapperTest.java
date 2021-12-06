@@ -85,7 +85,9 @@ public class UserMapperTest {
         System.out.println(u);
     }
 
-   //1. 1个参数
+    /**
+     * 1. 1个参数
+     */
     @Test
     public void testFindUserByName(){
         sqlSession = sqlSessionFactory.openSession();
@@ -110,8 +112,8 @@ public class UserMapperTest {
         sqlSession = sqlSessionFactory.openSession();
         mapper = sqlSession.getMapper(UserMapper.class);
 
-        User u = new User("hhk1");
-        List uList =  mapper.findUserByBeanName(u);
+        User user = new User("hhk1");
+        List uList =  mapper.findUserByBeanName(user);
         uList.stream().forEach(System.out::println);
     }
 

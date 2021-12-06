@@ -66,10 +66,10 @@
     <!-- 1. 1个参数
 			  #{}: 任何表示形式
 			  ${}: 可以是${参数名} ， ${value} ， ${_parameter}
-		  -->
+	-->
     <!--List findUserByName(String username);-->
     <select id="findUserByName" resultType="com.hk.pojo.User">
-        select  * from user where username = '${username}'
+        select  * from user where username = '${value}'
     </select>
 
     <!-- 2. 多个参数
