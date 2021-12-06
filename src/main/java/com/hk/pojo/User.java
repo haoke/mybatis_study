@@ -1,7 +1,6 @@
 package com.hk.pojo;
 
 import lombok.Data;
-
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -13,7 +12,7 @@ public class User implements Serializable {
     private String password;
     private Date birthday;
     private String address;
-    private String set;
+    private String sex;
     private List ids;
     private List order;
 
