@@ -55,13 +55,27 @@ public class UserMapperTest {
         User user =  new User();
         user.setUsername("赵一本");
         user.setPassword("999999999");
-       mapper.insertUser(user);
+        mapper.insertUser(user);
         System.out.println(user.getId());
 
         sqlSession.commit();
         sqlSession.close();
     }
 
+    @Test
+    public void testUpdateUser(){
+        sqlSession = sqlSessionFactory.openSession();
+        mapper = sqlSession.getMapper(UserMapper.class);
+
+        User user = new User();
+        user.setId(1);
+        user.setUsername("hulk11111");
+        mapper.updateUser(user);
+        System.out.println(mapper.findUserById(1));
+
+        sqlSession.commit();
+        sqlSession.close();
+    }
  /*   @Test
     public void testFindUserByNameFromUserQueryVo(){
         sqlSession = sqlSessionFactory.openSession();
@@ -97,6 +111,7 @@ public class UserMapperTest {
         u.stream().forEach(System.out::println);
     }
     //2. 多个参数
+
     @Test
     public void testFindUserByUnameAndPassword(){
         sqlSession = sqlSessionFactory.openSession();
@@ -135,9 +150,13 @@ public class UserMapperTest {
     public void testFindUserByIdAndNameParam(){
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-        Map<String, Object>  user = mapper.findUserByIdAndNameParam(57, "hhkk");
+        User  user = (User) mapper.findUserByIdAndNameParam(57, "hhkk");
+        System.out.println(user);
     }
 
+
+
+    //数据返回的几种情况
     // 单行数据  return map
     @Test
     public void testFindUserByIdMap() {

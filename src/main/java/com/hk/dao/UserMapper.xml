@@ -35,6 +35,7 @@
     </select>
 
     <!-- Insert -->
+    <!--get generated Id use 2 method -->
     <insert id="insertUser" parameterType="com.hk.pojo.User" useGeneratedKeys="true" keyProperty="id">
         <selectKey keyProperty="id" order="AFTER" resultType="int">
             select @@identity
@@ -95,7 +96,7 @@
     </select>
 
     <!--5. 参数以param传入 -->
-    <select id="findUserByIdAndNameParam" resultType="map">
+    <select id="findUserByIdAndNameParam" resultType="User">
         select * from user where id = #{id} and username =#{username}
     </select>
 
