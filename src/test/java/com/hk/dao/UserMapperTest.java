@@ -183,7 +183,7 @@ public class UserMapperTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
 
-        Map<String, Object> allUser = mapper.findAllUser();
+        Map<String, Object> allUser = mapper.findAllUser();         //TODO @Mapkey不熟悉，需要了解一下
         System.out.println(allUser);
     }
 
