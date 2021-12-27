@@ -45,17 +45,17 @@ public interface UserMapper {
 
     /**
      * 1. 1 个参数的情况
-     *      #{}
-     *      ${}
+     *      #{}: #{任意字符}
+     *      ${}: ${value}, ${_parameter}
      * @param username  search by username
      * @return    List<User>
      */
     List<User> findUserByName(String username);
 
     /**
-     *  2. 两个参数情况
+     *  2. 多个参数情况，默认将这些参数放入Map中。
      *      *  #{}:    arg0, arg1...argn /  param1,param2...paramn
-     *      *  ${}:    param1,param2...paramn
+     *      *  ${}:    param1,param2...paramn    注意单引号问题
      * @param username  用户名
      * @param password  密码
      * @return  User
@@ -84,7 +84,8 @@ public interface UserMapper {
      */
     User findUserByIdAndNameParam(@Param("id") int userid, @Param("username") String uname);
 
-    //6.传入参数是 List或Array ， mybatis仍是将List/Array 放入Map中， List以List为键，Array的 以Array为键
+    //6.传入参数是 Collection/Array ， mybatis仍是将Collection/Array 放入Map中， List以List为 Key，Array的 以Array为 Key
+    List<User> findUserByListOrArray(Map<String,Object> map);
 
 
     //数据返回的几种情况

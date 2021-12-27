@@ -1,7 +1,6 @@
 package com.hk.dao;
 
 import com.hk.pojo.User;
-import com.hk.pojo.UserQueryVo;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -12,7 +11,6 @@ import org.junit.Test;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
-import java.util.function.Predicate;
 
 public class UserMapperTest {
     SqlSessionFactory sqlSessionFactory;
@@ -23,7 +21,6 @@ public class UserMapperTest {
     public void init() throws IOException {
         InputStream inputstream = Resources.getResourceAsStream("SqlMapConfig.xml");
          sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputstream);
-
     }
 
     @Test
@@ -39,6 +36,8 @@ public class UserMapperTest {
         user.setPassword("1");
         user.setSex("1");
         List<User> userList = mapper.findUserByNameAndIdInBindPassword(user);  //TODO 必须使用范型  否则会报错
+
+
 
         userList.stream().forEach(System.out::println);
 
@@ -154,6 +153,7 @@ public class UserMapperTest {
         System.out.println(user);
     }
 
+    //6. 参数为List或Array的，包装为Map，List或Array做为Key
 
 
     //数据返回的几种情况
@@ -186,7 +186,6 @@ public class UserMapperTest {
         Map<String, Object> allUser = mapper.findAllUser();         //TODO @Mapkey不熟悉，需要了解一下
         System.out.println(allUser);
     }
-
 
 
 }

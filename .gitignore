@@ -4,6 +4,6 @@
 # User-specific stuff
 .idea/
 out/
-.settings/**
+.settings/
 target/**
 mybatis_git.iml

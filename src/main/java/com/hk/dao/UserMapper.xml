@@ -108,4 +108,9 @@
     <select id="findAllUser" resultType="java.util.HashMap">
         select * from user;
     </select>
+
+    <!--6. 参数是List或Array的情况，包装为Map，List或Array为Key-->
+    <select id="findUserByListOrArray" resultType="com.hk.pojo.User">
+
+    </select>
 </mapper>
