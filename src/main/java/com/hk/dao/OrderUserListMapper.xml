@@ -27,11 +27,14 @@
      </resultMap>
 
     <select id="findUserOrderDetailItemListMapper" resultMap="UserOrderDetailItemListResultMap" >
-        SELECT o.id,o.user_id o_user_id, o.number o_number,o.createtime o_createtime ,u.id uid,u.username u_name,
-               u.birthday u_birthday,od.id od_id,od.`items_num` od_num, od.items_id , od.items_num*it.price sumprice,
+        SELECT u.id uid,u.username u_name,u.birthday u_birthday,
+               o.id oid,o.user_id o_user_id, o.number o_number,o.createtime o_createtime ,
+               od.id od_id,od.`orders_id` , od.`items_num` od_num, od.items_id , od.items_num*it.price sumprice,
                it.name, it.price, it.`detail`,it.`createtime`
-        FROM Orders o, USER u ,orderdetail od, items it
-        WHERE o.user_id = u.id
+        FROM user u
+        LEFT JOIN orders o on o.user_id=u.id
+        LEFT JOIN orderdetail od on od.orders_id=o.id
+        LEFT JOIN items it ON od.`items_id`=it.`id`
     </select>
     <resultMap id="UserOrderDetailItemListResultMap" type="user">
         <id property="id" column="uid"/>

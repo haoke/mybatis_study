@@ -10,4 +10,5 @@ public interface OrderUserListMapper {
     public List findOrderUserDetailListMapper();
     public List findUserOrderDetailItemListMapper();
     public List findOrderUserListLazyLoading();
+
 }
