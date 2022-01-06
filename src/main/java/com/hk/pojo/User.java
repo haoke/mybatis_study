@@ -1,7 +1,6 @@
 package com.hk.pojo;
 
 import lombok.Data;
-
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
@@ -23,5 +22,4 @@ public class User implements Serializable {
     public User(String username) {
         this.username = username;
     }
-
 }

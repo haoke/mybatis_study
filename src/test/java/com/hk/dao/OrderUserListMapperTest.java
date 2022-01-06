@@ -1,5 +1,6 @@
 package com.hk.dao;
 
+import com.hk.pojo.User;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -42,7 +43,15 @@ public class OrderUserListMapperTest {
         OrderUserListMapper mapper = sqlSession.getMapper(OrderUserListMapper.class);
         List orderList = mapper.findOrderUserListLazyLoading();
         orderList.stream().forEach(System.out::println);
-
     }
 
+    @Test
+    public void testFindUserOrder(){
+        sqlSession = sqlSessionFactory.openSession();
+        OrderUserListMapper mapper = sqlSession.getMapper(OrderUserListMapper.class);
+        User user = mapper.findUserOrder(3);
+        System.out.println(user.getId());
+        System.out.println("====================================================");
+        System.out.println(user.getOrder());
+    }
 }

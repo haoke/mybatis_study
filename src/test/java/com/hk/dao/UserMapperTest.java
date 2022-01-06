@@ -1,29 +1,29 @@
 package com.hk.dao;
 
+import com.hk.pojo.Order;
 import com.hk.pojo.User;
-import com.hk.pojo.UserQueryVo;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.*;
-import java.util.function.Predicate;
 
 public class UserMapperTest {
     SqlSessionFactory sqlSessionFactory;
     SqlSession sqlSession;
     UserMapper mapper;
 
+    private static Logger logger = Logger.getLogger(UserMapper.class);
     @Before
     public void init() throws IOException {
         InputStream inputstream = Resources.getResourceAsStream("SqlMapConfig.xml");
          sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputstream);
-
     }
 
     @Test
@@ -37,8 +37,10 @@ public class UserMapperTest {
         user.setUsername("%h%");
         user.setIds(ids);
         user.setPassword("1");
-        user.setSex("1");
+        user.setSex("m");
         List<User> userList = mapper.findUserByNameAndIdInBindPassword(user);  //TODO 必须使用范型  否则会报错
+
+
 
         userList.stream().forEach(System.out::println);
 
@@ -55,13 +57,27 @@ public class UserMapperTest {
         User user =  new User();
         user.setUsername("赵一本");
         user.setPassword("999999999");
-       mapper.insertUser(user);
+        mapper.insertUser(user);
         System.out.println(user.getId());
 
         sqlSession.commit();
         sqlSession.close();
     }
 
+    @Test
+    public void testUpdateUser(){
+        sqlSession = sqlSessionFactory.openSession();
+        mapper = sqlSession.getMapper(UserMapper.class);
+
+        User user = new User();
+        user.setId(1);
+        user.setUsername("hulk11111");
+        mapper.updateUser(user);
+        System.out.println(mapper.findUserById(1));
+
+        sqlSession.commit();
+        sqlSession.close();
+    }
  /*   @Test
     public void testFindUserByNameFromUserQueryVo(){
         sqlSession = sqlSessionFactory.openSession();
@@ -80,12 +96,14 @@ public class UserMapperTest {
     public void testFindUserById(){
         sqlSession = sqlSessionFactory.openSession();
         mapper = sqlSession.getMapper(UserMapper.class);
-
         User u =  mapper.findUserById(4);
         System.out.println(u);
     }
 
-   //1. 1个参数
+
+    /**
+     * 1. 1个参数
+     */
     @Test
     public void testFindUserByName(){
         sqlSession = sqlSessionFactory.openSession();
@@ -95,6 +113,7 @@ public class UserMapperTest {
         u.stream().forEach(System.out::println);
     }
     //2. 多个参数
+
     @Test
     public void testFindUserByUnameAndPassword(){
         sqlSession = sqlSessionFactory.openSession();
@@ -110,8 +129,8 @@ public class UserMapperTest {
         sqlSession = sqlSessionFactory.openSession();
         mapper = sqlSession.getMapper(UserMapper.class);
 
-        User u = new User("hhk1");
-        List uList =  mapper.findUserByBeanName(u);
+        User user = new User("hhk1");
+        List uList =  mapper.findUserByBeanName(user);
         uList.stream().forEach(System.out::println);
     }
 
@@ -133,9 +152,14 @@ public class UserMapperTest {
     public void testFindUserByIdAndNameParam(){
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
-        Map<String, Object>  user = mapper.findUserByIdAndNameParam(57, "hhkk");
+        User  user = (User) mapper.findUserByIdAndNameParam(57, "hhkk");
+        System.out.println(user);
     }
 
+    //6. 参数为List或Array的，包装为Map，List或Array做为Key
+
+
+    //数据返回的几种情况
     // 单行数据  return map
     @Test
     public void testFindUserByIdMap() {
@@ -162,10 +186,19 @@ public class UserMapperTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
 
-        Map<String, Object> allUser = mapper.findAllUser();
-        System.out.println(allUser);
+        Map<String, Object> allUser = mapper.findAllUser();         //TODO @Mapkey不熟悉，需要了解一下
+        for(Object u: allUser.values()){
+            System.out.println(u);
+        }
+
     }
 
+    @Test
+    public void logtest(){
 
+        logger.info("----------普通信息打印级别------------");
+        logger.debug("----------调试打印级别------------");
+        logger.error("----------错误查看打印级别------------");
+    }
 
 }
