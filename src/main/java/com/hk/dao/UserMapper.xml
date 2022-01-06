@@ -35,9 +35,8 @@
     </select>
     <select id="findOrderByUId"  resultType="com.hk.pojo.Order" >
         <!--select * from user where  id = #{id}-->
-        select * from orders u where userid=#{userid}
+        select * from orders u where userid=#{uid} and id=#{depid}
     </select>
-
 
     <!-- Insert -->
     <!--get generated Id use 2 method -->

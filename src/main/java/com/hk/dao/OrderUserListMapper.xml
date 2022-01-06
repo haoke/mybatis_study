@@ -70,13 +70,14 @@
         <result property="createtime" column="createtime"/>
         <association property="user" select="com.hk.mapper.UsersMapper.findUserById" column="user_id"/>
     </resultMap>
-    
+
+    <!-- 一对多分步查询/延迟加载/临时增加列did，传递两个参数，以Map传给findOrderByUId-->
     <select id="findUserOrder" resultMap="findUserOrderResultMap">
-        select * from user where id=#{id}
+        select *,'4' as did  from user    where id=#{id}
     </select>
     <resultMap id="findUserOrderResultMap" type="user">
         <id property="id" column="id"/>
         <result property="username" column="username"/>
-        <collection property="order" select="com.hk.dao.UserMapper.findOrderByUId" column="id"/>
+        <collection property="order" select="com.hk.dao.UserMapper.findOrderByUId" column="{uid=id,depid=did}"/>
     </resultMap>
 </mapper>
