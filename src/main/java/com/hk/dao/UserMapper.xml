@@ -14,16 +14,16 @@
     <sql id="query_user_where_id_in">
         <bind name="password" value="'%' + password + '%'"/>
         <if test="username != null and username != ''">
-            and username like concat('%', #{username},'%')
+            and  username like concat('%', #{username},'%')
         </if>
         <if test="sex != null  and sex != ''">
-            or sex like '%${sex}%'                                                <!-- TODO -->
+            and sex like '%${sex}%'
         </if>
         <if test="password !=null and password !='' ">
-            or password like #{password}
+            and password like #{password}
         </if>
         <if test="ids != null and ids != ''">
-            <foreach collection="ids" open="or id in (" close=")" item="id" separator=",">
+            <foreach collection="ids" open="and id in (" close=")" item="id" separator=",">
                 #{id}
             </foreach>
         </if>

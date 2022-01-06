@@ -6,10 +6,14 @@ import java.util.List;
 
 public interface OrderUserListMapper {
     /**
-     * order user orderDetail   union search
+     *  多对一 order->user->orderDetail
      * @return
      */
     public List findOrderUserDetailListMapper();
+
+    /**
+     * 一对多 user->order->orderdetail->item
+     */
     public List findUserOrderDetailItemListMapper();
 
     /**

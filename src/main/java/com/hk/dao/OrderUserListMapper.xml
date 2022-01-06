@@ -4,6 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hk.dao.OrderUserListMapper">
 
+    <!-- 多对一 order->user->orderdetail/association+collection -->
     <select id="findOrderUserDetailListMapper"  resultMap="OrderUserDetailListResultMap">
         SELECT o.id, o.user_id, o.number,o.createtime, u.id  uid,u.username, u.birthday, od.id od_id,od.items_id
         FROM Orders o
@@ -26,6 +27,7 @@
         </collection>
      </resultMap>
 
+    <!-- 一对多 user->order->orderdetail->item/ collection+association -->
     <select id="findUserOrderDetailItemListMapper" resultMap="UserOrderDetailItemListResultMap" >
         SELECT u.id uid,u.username u_name,u.birthday u_birthday,
                o.id oid,o.user_id o_user_id, o.number o_number,o.createtime o_createtime ,
@@ -60,7 +62,8 @@
             </collection>
         </collection>
     </resultMap>
-    
+
+    <!--多对一分步查询/延迟加载 -->
     <select id="findOrderUserListLazyLoading" resultMap="OrderUserListLazyLoadingResultMap">
         select * from orders
     </select>

@@ -37,7 +37,7 @@ public class UserMapperTest {
         user.setUsername("%h%");
         user.setIds(ids);
         user.setPassword("1");
-        user.setSex("1");
+        user.setSex("m");
         List<User> userList = mapper.findUserByNameAndIdInBindPassword(user);  //TODO 必须使用范型  否则会报错
 
 
