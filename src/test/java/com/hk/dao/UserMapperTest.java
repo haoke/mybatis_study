@@ -1,10 +1,12 @@
 package com.hk.dao;
 
+import com.hk.pojo.Order;
 import com.hk.pojo.User;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+import org.apache.log4j.Logger;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -17,6 +19,7 @@ public class UserMapperTest {
     SqlSession sqlSession;
     UserMapper mapper;
 
+    private static Logger logger = Logger.getLogger(UserMapper.class);
     @Before
     public void init() throws IOException {
         InputStream inputstream = Resources.getResourceAsStream("SqlMapConfig.xml");
@@ -93,10 +96,10 @@ public class UserMapperTest {
     public void testFindUserById(){
         sqlSession = sqlSessionFactory.openSession();
         mapper = sqlSession.getMapper(UserMapper.class);
-
         User u =  mapper.findUserById(4);
         System.out.println(u);
     }
+
 
     /**
      * 1. 1个参数
@@ -184,8 +187,18 @@ public class UserMapperTest {
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
 
         Map<String, Object> allUser = mapper.findAllUser();         //TODO @Mapkey不熟悉，需要了解一下
-        System.out.println(allUser);
+        for(Object u: allUser.values()){
+            System.out.println(u);
+        }
+
     }
 
+    @Test
+    public void logtest(){
+
+        logger.info("----------普通信息打印级别------------");
+        logger.debug("----------调试打印级别------------");
+        logger.error("----------错误查看打印级别------------");
+    }
 
 }

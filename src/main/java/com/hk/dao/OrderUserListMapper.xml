@@ -59,7 +59,6 @@
                 </association>
             </collection>
         </collection>
-
     </resultMap>
     
     <select id="findOrderUserListLazyLoading" resultMap="OrderUserListLazyLoadingResultMap">
@@ -70,5 +69,14 @@
         <result property="number" column="number"/>
         <result property="createtime" column="createtime"/>
         <association property="user" select="com.hk.mapper.UsersMapper.findUserById" column="user_id"/>
+    </resultMap>
+    
+    <select id="findUserOrder" resultMap="findUserOrderResultMap">
+        select * from user where id=#{id}
+    </select>
+    <resultMap id="findUserOrderResultMap" type="user">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <collection property="order" select="com.hk.dao.UserMapper.findOrderByUId" column="id"/>
     </resultMap>
 </mapper>

@@ -29,10 +29,15 @@
         </if>
     </sql>
 
-    <select id="findUserById" parameterType="int" resultType="com.hk.pojo.User" >
+    <select id="findUserById"  resultType="com.hk.pojo.User" >
         <!--select * from user where  id = #{id}-->
-        select * from user where  id = ${id}
+        select * from user u where id =#{dddddid}
     </select>
+    <select id="findOrderByUId"  resultType="com.hk.pojo.Order" >
+        <!--select * from user where  id = #{id}-->
+        select * from orders u where userid=#{userid}
+    </select>
+
 
     <!-- Insert -->
     <!--get generated Id use 2 method -->

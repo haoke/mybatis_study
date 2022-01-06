@@ -1,5 +1,6 @@
 package com.hk.dao;
 
+import com.hk.pojo.Order;
 import com.hk.pojo.User;
 import org.apache.ibatis.annotations.MapKey;
 import org.apache.ibatis.annotations.Param;
@@ -39,6 +40,7 @@ public interface UserMapper {
      * @return user
      */
     User findUserById(Integer id);
+    Order findOrderByUId(Integer id);
 
 
     //传入参数的几种情况
