@@ -4,11 +4,12 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.hk.dao.OrderUserListMapper">
 
+    <!-- 多对一 order->user->orderdetail/association+collection -->
     <select id="findOrderUserDetailListMapper"  resultMap="OrderUserDetailListResultMap">
         SELECT o.id, o.user_id, o.number,o.createtime, u.id  uid,u.username, u.birthday, od.id od_id,od.items_id
-        FROM Orders o,USER u, orderdetail od
-        WHERE o.user_id = u.id
-          AND od.`orders_id` = o.`id`
+        FROM Orders o
+            left join USER u on o.user_id = u.id
+            left join orderdetail od on od.`orders_id` = o.`id`
     </select>
     <resultMap id="OrderUserDetailListResultMap" type="order">
         <id property="id" column="id"/>
@@ -26,12 +27,16 @@
         </collection>
      </resultMap>
 
+    <!-- 一对多 user->order->orderdetail->item/ collection+association -->
     <select id="findUserOrderDetailItemListMapper" resultMap="UserOrderDetailItemListResultMap" >
-        SELECT o.id,o.user_id o_user_id, o.number o_number,o.createtime o_createtime ,u.id uid,u.username u_name,
-               u.birthday u_birthday,od.id od_id,od.`items_num` od_num, od.items_id , od.items_num*it.price sumprice,
+        SELECT u.id uid,u.username u_name,u.birthday u_birthday,
+               o.id oid,o.user_id o_user_id, o.number o_number,o.createtime o_createtime ,
+               od.id od_id,od.`orders_id` , od.`items_num` od_num, od.items_id , od.items_num*it.price sumprice,
                it.name, it.price, it.`detail`,it.`createtime`
-        FROM Orders o, USER u ,orderdetail od, items it
-        WHERE o.user_id = u.id
+        FROM user u
+        LEFT JOIN orders o on o.user_id=u.id
+        LEFT JOIN orderdetail od on od.orders_id=o.id
+        LEFT JOIN items it ON od.`items_id`=it.`id`
     </select>
     <resultMap id="UserOrderDetailItemListResultMap" type="user">
         <id property="id" column="uid"/>
@@ -56,9 +61,9 @@
                 </association>
             </collection>
         </collection>
-
     </resultMap>
-    
+
+    <!--多对一分步查询/延迟加载 -->
     <select id="findOrderUserListLazyLoading" resultMap="OrderUserListLazyLoadingResultMap">
         select * from orders
     </select>
@@ -67,5 +72,15 @@
         <result property="number" column="number"/>
         <result property="createtime" column="createtime"/>
         <association property="user" select="com.hk.mapper.UsersMapper.findUserById" column="user_id"/>
+    </resultMap>
+
+    <!-- 一对多分步查询/延迟加载/临时增加列did，传递两个参数，以Map传给findOrderByUId-->
+    <select id="findUserOrder" resultMap="findUserOrderResultMap">
+        select *,'4' as did  from user    where id=#{id}
+    </select>
+    <resultMap id="findUserOrderResultMap" type="user">
+        <id property="id" column="id"/>
+        <result property="username" column="username"/>
+        <collection property="order" select="com.hk.dao.UserMapper.findOrderByUId" column="{uid=id,depid=did}"/>
     </resultMap>
 </mapper>
