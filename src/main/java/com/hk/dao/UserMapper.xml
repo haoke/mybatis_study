@@ -50,16 +50,14 @@
 
     <update id="updateUser" parameterType="user">
         update user
-        <trim>
             <set>
-                <if test="username != null">
+                <if test="username != null and username !='' ">
                     username = #{username},
                 </if>
-                <if test="password != null">
-                    password = #{password},
+                <if test="password != null and password !='' ">
+                    password = #{password}
                 </if>
             </set>
-        </trim>
         where id = #{id}
     </update>
 
@@ -117,4 +115,33 @@
     <select id="findUserByListOrArray" resultType="com.hk.pojo.User">
 
     </select>
+
+    <!-- 批量删除 -->
+    <!-- deleteMore -->
+    <delete id="deleteMore" >
+        delete from user where id in (${ids});
+    </delete>
+
+    <!-- deleteMore2 -->
+    <delete id="deleteMore2">
+        delete from user where id in
+        <foreach  open="(" collection="list" item="id" close=")" separator=",">
+            #{id}
+        </foreach>
+    </delete>
+
+    <!-- insertUserByArray -->
+    <insert id="insertUserByArray" >
+        insert into user (username, password, sex,birthday) values
+        <foreach collection="users" item="user" separator=",">
+            ( #{user.username}, #{user.password}, #{user.sex},#{user.birthday})
+        </foreach>
+    </insert>
+
+    <!-- updateUserByArray -->
+    <update id="updateUserByArray">
+        <foreach collection="array" item="user" separator=";">
+            update user set username=#{user.username},password=#{user.password} ,sex=#{user.sex} where id=#{user.id}
+        </foreach>
+    </update>
 </mapper>

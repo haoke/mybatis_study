@@ -105,4 +105,12 @@ public interface UserMapper {
      */
     @MapKey("id")
     Map<String, Object> findAllUser();
+
+    //批量操作
+     void deleteMore(String ids);
+     void  deleteMore2(List ids);
+     void updateUserByArray(User[] users) ;
+     void insertUserByArray(@Param("users") User[] users);
+
+
 }

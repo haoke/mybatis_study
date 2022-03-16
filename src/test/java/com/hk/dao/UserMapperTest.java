@@ -71,7 +71,7 @@ public class UserMapperTest {
 
         User user = new User();
         user.setId(1);
-        user.setUsername("hulk11111");
+        user.setUsername("hulk_modify");
         mapper.updateUser(user);
         System.out.println(mapper.findUserById(1));
 
@@ -157,6 +157,68 @@ public class UserMapperTest {
     }
 
     //6. 参数为List或Array的，包装为Map，List或Array做为Key
+
+
+    //批量操作
+    @Test
+    public void testDeleteMore(){
+
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+
+        String ids= "1,2,3";
+        mapper.deleteMore(ids);
+    }
+
+    @Test
+    public void testDeleteMore2(){
+
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+
+        List ids = new ArrayList();
+        ids.add(1);
+        ids.add(2);
+        ids.add(4);
+        mapper.deleteMore2(ids);
+        sqlSession.commit();
+        sqlSession.close();
+    }
+
+    @Test
+    public void testInsertUserByArray(){
+       sqlSession = sqlSessionFactory.openSession();
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+
+        User user1 = new User("Blus","123","2",new Date());
+        User user2 = new User("clinton","222","1",new Date());
+        User user3 = new User("Tomclus", "111", "1", new Date());
+        User[] users = new User[] {user1, user2, user3};
+        mapper.insertUserByArray(users);
+
+        sqlSession.commit();
+        sqlSession.close();
+
+    }
+
+    @Test
+    public void testUpdateUserByArray(){
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+
+        User user1 = new User(3, "ironman1","1112","1");
+        User user2 = new User(7,"ironman2","222","0");
+        User user3 =new User(10,"ironman3","444","2");
+
+        User[] users = new User[] {user1, user2,user3};
+
+        mapper.updateUserByArray(users);
+
+        sqlSession.commit();
+        sqlSession.close();
+    }
+
+
 
 
     //数据返回的几种情况

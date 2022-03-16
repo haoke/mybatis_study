@@ -22,4 +22,18 @@ public class User implements Serializable {
     public User(String username) {
         this.username = username;
     }
+
+    public User(Integer id, String username, String password, String sex){
+        this.id = id;
+        this.username = username;
+        this.password = password;
+        this.sex = sex;
+    }
+
+    public User(String username, String password, String sex, Date birthday){
+        this.username = username;
+        this.password = password;
+        this.sex = sex;
+        this.birthday = birthday;
+    }
 }
