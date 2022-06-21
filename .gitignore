@@ -5,5 +5,7 @@
 .idea/
 out/
 .settings/
-target/**
+target/
 mybatis_git.iml
+.classpath
+.factorypath
