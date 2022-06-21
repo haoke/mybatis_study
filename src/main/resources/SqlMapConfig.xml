@@ -14,6 +14,10 @@
     <typeAliases>
         <package name="com.hk.pojo"/>
     </typeAliases>
+    <plugins>
+        <plugin interceptor="com.github.pagehelper.PageInterceptor"/>
+
+    </plugins>
     <environments default="mysql">
         <environment id="mysql">
             <transactionManager type="JDBC"/>
@@ -26,6 +30,6 @@
         </environment>
     </environments>
     <mappers>
-        <package name="com.hk.dao"/>
+        <package name="com.hk"/>
     </mappers>
 </configuration>

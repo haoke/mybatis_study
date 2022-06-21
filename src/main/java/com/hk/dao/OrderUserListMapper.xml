@@ -27,6 +27,7 @@
         </collection>
      </resultMap>
 
+
     <!-- 一对多 user->order->orderdetail->item/ collection+association -->
     <select id="findUserOrderDetailItemListMapper" resultMap="UserOrderDetailItemListResultMap" >
         SELECT u.id uid,u.username u_name,u.birthday u_birthday,
@@ -47,12 +48,12 @@
             <result property="userid" column="o_user_id"/>
             <result property="number" column="o_number"/>
             <result property="createtime" column="createtime"/>
-            <collection property="orderDetail" ofType="orderdetail">
+            <collection property="orderDetail" ofType="com.hk.pojo.OrderDetail">
                 <result property="id" column="od_id"/>
                 <result property="itemsNum" column="od_num"/>
                 <result property="itemsId" column="items_id"/>
                 <result column="sumprice"/>
-                <association property="items" javaType="items">
+                <association property="items" javaType="com.hk.pojo.Items">
                     <id property="id" column="items_id"/>
                     <result property="name" column="name"/>
                     <result property="price" column="price"/>

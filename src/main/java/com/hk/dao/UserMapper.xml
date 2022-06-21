@@ -113,8 +113,10 @@
 
     <!--6. 参数是List或Array的情况，包装为Map，List或Array为Key-->
     <select id="findUserByListOrArray" resultType="com.hk.pojo.User">
-
+        select * from user where id=#{list[0]}  or id=#{list[1]}
     </select>
+
+
 
     <!-- 批量删除 -->
     <!-- deleteMore -->

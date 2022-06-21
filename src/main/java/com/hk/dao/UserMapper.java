@@ -87,7 +87,7 @@ public interface UserMapper {
     User findUserByIdAndNameParam(@Param("id") int userid, @Param("username") String uname);
 
     //6.传入参数是 Collection/Array ， mybatis仍是将Collection/Array 放入Map中， List以List为 Key，Array的 以Array为 Key
-    List<User> findUserByListOrArray(Map<String,Object> map);
+    List<User> findUserByListOrArray(List list_id);
 
 
     //数据返回的几种情况

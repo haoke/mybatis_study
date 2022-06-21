@@ -157,7 +157,16 @@ public class UserMapperTest {
     }
 
     //6. 参数为List或Array的，包装为Map，List或Array做为Key
-
+    @Test
+    public void testFindUserByListOrArray(){
+       SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+        List listId = new ArrayList();
+        listId.add(3);
+        listId.add(7);
+        List<User> userByListOrArray = mapper.findUserByListOrArray(listId);
+        System.out.println(userByListOrArray);
+    }
 
     //批量操作
     @Test
@@ -229,6 +238,8 @@ public class UserMapperTest {
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
         Map<String, Object> userMap = mapper.findUserByIdMap(3);
         System.out.println("================================");
+        System.out.println(userMap);
+        System.out.println("================================");
        /* if (userMap != null) {
             for (Map.Entry<String, Object> entry : userMap.entrySet()) {
                 System.out.println(entry.getKey() + ":" + entry.getValue());
@@ -249,9 +260,11 @@ public class UserMapperTest {
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
 
         Map<String, Object> allUser = mapper.findAllUser();         //TODO @Mapkey不熟悉，需要了解一下
-        for(Object u: allUser.values()){
+
+        System.out.println(allUser);
+        /*for(Object u: allUser.values()){
             System.out.println(u);
-        }
+        }*/
 
     }
 
