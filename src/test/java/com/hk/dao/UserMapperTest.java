@@ -3,6 +3,7 @@ package com.hk.dao;
 import com.hk.pojo.Order;
 import com.hk.pojo.User;
 import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -51,7 +52,7 @@ public class UserMapperTest {
 
     @Test
     public void testInsertUser() throws Exception{
-        sqlSession = sqlSessionFactory.openSession();
+        sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH); // 批量操作，速度比foreach更快
         mapper = sqlSession.getMapper(UserMapper.class);
 
         User user =  new User();
@@ -138,9 +139,6 @@ public class UserMapperTest {
         sqlSession.close();
     }
 
-
-
-
     //数据返回的几种情况
     // 单行数据  return map
     @Test
@@ -179,6 +177,7 @@ public class UserMapperTest {
 
     }
 
+    //调用存储过程
     @Test
     public void  getAllUserByProcedure(){
         SqlSession sqlSession = sqlSessionFactory.openSession();
@@ -186,6 +185,7 @@ public class UserMapperTest {
         List allUserByProcedure = mapper.getAllUserByProcedure(1, 1000);
         System.out.println(allUserByProcedure);
     }
+
     @Test
     public void logtest(){
 

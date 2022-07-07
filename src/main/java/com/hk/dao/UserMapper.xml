@@ -115,15 +115,6 @@
     <select id="findUserByListOrArray" resultType="com.hk.pojo.User">
         select * from user where id=#{list[0]}  or id=#{list[1]}
     </select>
-    <select id="getAllUserByProcedure" resultType="user" statementType="CALLABLE">
-        {
-            call getAllUsers(
-                #{sid,mode=IN,jdbcType=INTEGER},
-                #{eid,mode=IN,jdbcType=INTEGER}
-            )
-        }
-    </select>
-
 
     <!-- 批量删除 -->
     <!-- deleteMore -->
@@ -153,4 +144,14 @@
             update user set username=#{user.username},password=#{user.password} ,sex=#{user.sex} where id=#{user.id}
         </foreach>
     </update>
+
+    <!--调用存储过程-->
+    <select id="getAllUserByProcedure" resultType="user" statementType="CALLABLE">
+        {
+            call getAllUsers(
+                #{sid,mode=IN,jdbcType=INTEGER},
+                #{eid,mode=IN,jdbcType=INTEGER}
+            )
+            }
+    </select>
 </mapper>
