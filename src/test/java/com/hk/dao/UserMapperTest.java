@@ -180,11 +180,20 @@ public class UserMapperTest {
     }
 
     @Test
+    public void  getAllUserByProcedure(){
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+        List allUserByProcedure = mapper.getAllUserByProcedure(1, 1000);
+        System.out.println(allUserByProcedure);
+    }
+    @Test
     public void logtest(){
 
         logger.info("----------普通信息打印级别------------");
         logger.debug("----------调试打印级别------------");
         logger.error("----------错误查看打印级别------------");
     }
+
+
 
 }

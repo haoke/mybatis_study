@@ -112,5 +112,7 @@ public interface UserMapper {
      void updateUserByArray(User[] users) ;
      void insertUserByArray(@Param("users") User[] users);
 
+     //调用存储过程
+    List getAllUserByProcedure(@Param("sid") Integer sid,@Param("eid") Integer eid);
 
 }
