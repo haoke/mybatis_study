@@ -33,6 +33,6 @@
         </environment>
     </environments>
     <mappers>
-        <package name="com.hk"/>
+        <package name="com.hk.dao"/>
     </mappers>
 </configuration>

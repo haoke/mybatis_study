@@ -1,6 +1,5 @@
 package com.hk.dao;
 
-import com.hk.pojo.Order;
 import com.hk.pojo.User;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.ExecutorType;

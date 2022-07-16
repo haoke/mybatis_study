@@ -121,7 +121,7 @@
         </dependency>
     </dependencies>
 
-    <build>
+    <!--<build>
 
         <resources>
             <resource>
@@ -139,7 +139,6 @@
                 </includes>
                 <filtering>false</filtering>
             </resource>
-
         </resources>
-    </build>
+    </build>-->
 </project>
