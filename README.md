@@ -1,6 +1,6 @@
 # mybatis_study</br>
-[*]1.Mybatis的简介和下载安装</br>
-[]2.MyBatis入门例子</br>
+1.Mybatis的简介和下载安装</br>
+2.MyBatis入门例子</br>
 3.MyBatis入门例子升级</br>
 4.解决mybatis的配置文件没代码提示的问题</br>
 5·全局配置文件properties属性</br>
