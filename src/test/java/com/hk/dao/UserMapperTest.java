@@ -193,6 +193,14 @@ public class UserMapperTest {
         logger.error("----------错误查看打印级别------------");
     }
 
-
+    @Test
+    public void findUserByListOrArray(){
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        UserMapper mapper = sqlSession.getMapper(UserMapper.class);
+        List idList = new ArrayList();
+        idList.add(1); idList.add(3); idList.add(7);
+        List<User> userByListOrArray = mapper.findUserByListOrArray(idList);
+        System.out.println(userByListOrArray);
+    }
 
 }

@@ -13,7 +13,8 @@ import java.util.Map;
 public interface UserMapper {
 
     /**
-     * 使用bind 和 like concat('%'+?+'%')模糊查询拼装, in 多项查询,
+     * 1. 查询语句的拼装：使用bind 和 concat('%'+?+'%'),
+     * 2. in 多项查询
      * sql: select * from user where username like ? /concat('%'+?+'%')/in
      *
      * @param user  a javabean parameter
@@ -40,11 +41,11 @@ public interface UserMapper {
      * @return user
      */
     User findUserById(Integer id);
+
     Order findOrderByUId(Integer id);
 
 
-    //传入参数的几种情况
-
+    //传入
     /**
      * 1. 1 个参数的情况
      *      #{}: #{任意字符}
@@ -56,6 +57,7 @@ public interface UserMapper {
 
     /**
      *  2. 多个参数情况，默认将这些参数放入Map中。
+     *      mapper的传入参数取值
      *      *  #{}:    arg0, arg1...argn /  param1,param2...paramn
      *      *  ${}:    param1,param2...paramn    注意单引号问题
      * @param username  用户名
@@ -103,6 +105,7 @@ public interface UserMapper {
      *
      * @return {@link Map}<{@link String}, {@link Object}>
      */
+    //指定返回值包装为Map并以id为key
     @MapKey("id")
     Map<String, Object> findAllUser();
 
