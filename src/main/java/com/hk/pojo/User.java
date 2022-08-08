@@ -1,5 +1,6 @@
 package com.hk.pojo;
 
+import com.hk.plugins.Sex;
 import lombok.Data;
 import java.io.Serializable;
 import java.util.Date;
@@ -12,7 +13,7 @@ public class User implements Serializable {
     private String password;
     private Date birthday;
     private String address;
-    private String sex;
+    private Sex sex;
     private List ids;
     private List order;
 
@@ -23,14 +24,14 @@ public class User implements Serializable {
         this.username = username;
     }
 
-    public User(Integer id, String username, String password, String sex){
+    public User(Integer id, String username, String password, Sex sex){
         this.id = id;
         this.username = username;
         this.password = password;
         this.sex = sex;
     }
 
-    public User(String username, String password, String sex, Date birthday){
+    public User(String username, String password, Sex sex, Date birthday){
         this.username = username;
         this.password = password;
         this.sex = sex;

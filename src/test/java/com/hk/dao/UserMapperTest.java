@@ -1,5 +1,6 @@
 package com.hk.dao;
 
+import com.hk.plugins.Sex;
 import com.hk.pojo.User;
 import org.apache.ibatis.io.Resources;
 import org.apache.ibatis.session.ExecutorType;
@@ -26,6 +27,7 @@ public class UserMapperTest {
          sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputstream);
     }
 
+    //查
     @Test
     public void testfindUserByNameAndIdInBindPassword() throws Exception{
         sqlSession = sqlSessionFactory.openSession();
@@ -37,9 +39,8 @@ public class UserMapperTest {
         user.setUsername("%h%");
         user.setIds(ids);
         user.setPassword("1");
-        user.setSex("m");
+        user.setSex(Sex.MALE);
         List<User> userList = mapper.findUserByNameAndIdInBindPassword(user);  //TODO 必须使用范型  否则会报错
-
 
 
         userList.stream().forEach(System.out::println);
@@ -49,6 +50,7 @@ public class UserMapperTest {
         }*/
     }
 
+    //增
     @Test
     public void testInsertUser() throws Exception{
         sqlSession = sqlSessionFactory.openSession(ExecutorType.BATCH); // 批量操作，速度比foreach更快
@@ -64,6 +66,7 @@ public class UserMapperTest {
         sqlSession.close();
     }
 
+    //改
     @Test
     public void testUpdateUser(){
         sqlSession = sqlSessionFactory.openSession();
@@ -110,9 +113,9 @@ public class UserMapperTest {
        sqlSession = sqlSessionFactory.openSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
 
-        User user1 = new User("Blus","123","2",new Date());
-        User user2 = new User("clinton","222","1",new Date());
-        User user3 = new User("Tomclus", "111", "1", new Date());
+        User user1 = new User("Blus","123",Sex.FEMALE,new Date());
+        User user2 = new User("clinton","222",Sex.MALE,new Date());
+        User user3 = new User("Tomclus", "111", Sex.MALE, new Date());
         User[] users = new User[] {user1, user2, user3};
         mapper.insertUserByArray(users);
 
@@ -126,9 +129,9 @@ public class UserMapperTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
 
-        User user1 = new User(3, "ironman1","1112","1");
-        User user2 = new User(7,"ironman2","222","0");
-        User user3 =new User(10,"ironman3","444","2");
+        User user1 = new User(3, "ironman1","1112",Sex.MALE);
+        User user2 = new User(7,"ironman2","222",Sex.FEMALE);
+        User user3 =new User(10,"ironman3","444",Sex.FEMALE);
 
         User[] users = new User[] {user1, user2,user3};
 
@@ -145,14 +148,12 @@ public class UserMapperTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
         Map<String, Object> userMap = mapper.findUserByIdMap(3);
-        System.out.println("================================");
         System.out.println(userMap);
-        System.out.println("================================");
-       /* if (userMap != null) {
+        if (userMap != null) {
             for (Map.Entry<String, Object> entry : userMap.entrySet()) {
                 System.out.println(entry.getKey() + ":" + entry.getValue());
             }
-        }*/
+        }
         Iterator<Map.Entry<String, Object>> it = userMap.entrySet().iterator();
         while(it.hasNext()){
             Map.Entry<String, Object> entry = it.next();
@@ -167,7 +168,7 @@ public class UserMapperTest {
         SqlSession sqlSession = sqlSessionFactory.openSession();
         UserMapper mapper = sqlSession.getMapper(UserMapper.class);
 
-        Map<String, Object> allUser = mapper.findAllUser();         //TODO @Mapkey不熟悉，需要了解一下
+        Map<String, Object> allUser = mapper.findAllUser();
 
         System.out.println(allUser);
         /*for(Object u: allUser.values()){

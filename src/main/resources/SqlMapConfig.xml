@@ -17,9 +17,12 @@
     <typeAliases>
         <package name="com.hk.pojo"/>
     </typeAliases>
+   <typeHandlers>
+       <typeHandler handler="com.hk.plugins.MyTypeHandler" javaType="com.hk.plugins.Sex" />
+   </typeHandlers>
     <plugins>
         <plugin interceptor="com.github.pagehelper.PageInterceptor"/>
-
+        <plugin interceptor="com.hk.plugins.MyPlugin"/>
     </plugins>
     <environments default="mysql">
         <environment id="mysql">
