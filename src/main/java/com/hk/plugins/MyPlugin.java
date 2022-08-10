@@ -19,6 +19,7 @@ public class MyPlugin implements Interceptor {
         Object target = invocation.getTarget();
         MetaObject metaObject = SystemMetaObject.forObject(target);
         metaObject.setValue("parameterHandler.parameterObject", 7);
+        System.out.println("test");
         return invocation.proceed();
     }
 
